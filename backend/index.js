@@ -4,8 +4,11 @@ const cors = require('cors');
 require('dotenv').config({ path: './config.env' });
 
 const userRouter = require('./routes/userRoutes');
+const globalErrorHandler = require('./controllers/errorController');
 
 const app = express();
+
+//console.log(process.env);
 
 app.use(cors());
 app.use(express.json());
@@ -24,6 +27,8 @@ mongoose.connect(DB).then(() => console.log('Data Base Successfuly connected'));
 
 // ROUTES
 app.use('/api/v1/users', userRouter);
+
+app.use(globalErrorHandler);
 
 // START SERVER
 const port = process.env.PORT || 5000;
