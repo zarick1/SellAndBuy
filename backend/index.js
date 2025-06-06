@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config({ path: './config.env' });
 
+const userRouter = require('./routes/userRoutes');
+
 const app = express();
 
 app.use(cors());
@@ -20,6 +22,10 @@ mongoose.connect(DB).then(() => console.log('Data Base Successfuly connected'));
 //   res.json({ message: 'ADSSSSSS' });
 // });
 
+// ROUTES
+app.use('/api/v1/users', userRouter);
+
+// START SERVER
 const port = process.env.PORT || 5000;
 const server = app.listen(port, () => {
   console.log(`App running on ${port}...`);
