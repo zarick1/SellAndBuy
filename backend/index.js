@@ -4,6 +4,7 @@ const cors = require('cors');
 require('dotenv').config({ path: './config.env' });
 
 const userRouter = require('./routes/userRoutes');
+const adsRouter = require('./routes/adsRoutes');
 const globalErrorHandler = require('./controllers/errorController');
 
 const app = express();
@@ -27,6 +28,7 @@ mongoose.connect(DB).then(() => console.log('Data Base Successfuly connected'));
 
 // ROUTES
 app.use('/api/v1/users', userRouter);
+app.use('/api/v1/ads', adsRouter);
 
 app.use(globalErrorHandler);
 

@@ -89,12 +89,14 @@ exports.protect = async (req, res, next) => {
         )
       );
 
-    // 4)
+    req.user = freshUser;
     next();
   } catch (err) {
+    console.log('nesto');
     res.status(400).json({
       status: 'error',
-      err,
+      message: err.message,
+      name: err.name,
     });
   }
 };
