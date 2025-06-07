@@ -63,8 +63,6 @@ exports.login = async (req, res, next) => {
 
 exports.protect = async (req, res, next) => {
   try {
-    console.log('nesto');
-
     // 1) Getting token and check if it exists
     let token;
     if (

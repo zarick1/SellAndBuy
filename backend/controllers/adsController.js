@@ -6,6 +6,7 @@ const AppError = require('../utils/appError');
 exports.getAllAds = async (req, res, next) => {
   try {
     const queryObj = { ...qs.parse(req._parsedUrl.query) };
+
     // filter
     const excludedFields = ['page', 'sort', 'limit', 'fields'];
     excludedFields.forEach(el => delete queryObj[el]);
@@ -153,6 +154,25 @@ exports.deleteAd = async (req, res, next) => {
     res.status(204).json({
       status: 'success',
       data: null,
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: 'error',
+      error: err.message,
+    });
+  }
+};
+
+exports.getMyAds = async (req, res, next) => {
+  try {
+    const ads = await Ad.find({ user: req.user._id });
+
+    res.status(200).json({
+      status: 'success',
+      results: ads.length,
+      data: {
+        ads,
+      },
     });
   } catch (err) {
     res.status(400).json({
