@@ -63,6 +63,8 @@ exports.login = async (req, res, next) => {
 
 exports.protect = async (req, res, next) => {
   try {
+    console.log('nesto');
+
     // 1) Getting token and check if it exists
     let token;
     if (
@@ -92,7 +94,6 @@ exports.protect = async (req, res, next) => {
     req.user = freshUser;
     next();
   } catch (err) {
-    console.log('nesto');
     res.status(400).json({
       status: 'error',
       message: err.message,

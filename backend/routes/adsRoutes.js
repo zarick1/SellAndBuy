@@ -15,4 +15,10 @@ router
   .patch(authController.protect, adsController.updateAd)
   .delete(authController.protect, adsController.deleteAd);
 
+// router.get('/my-ads', authController.protect, adsController.getMyAds);
+
+router.get('/my-ads', (req, res) => {
+  res.send('My ads route hit!');
+});
+
 module.exports = router;
