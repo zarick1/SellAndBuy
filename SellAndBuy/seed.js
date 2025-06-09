@@ -44,7 +44,7 @@ const usersData = [];
 for (let i = 1; i <= 10; i++) {
   usersData.push({
     username: `user${i}`,
-    password: 'Password123', // plain text, biće heširano ispod
+    password: 'Password123',
     passwordConfirm: 'Password123',
     phone: `06000000${i.toString().padStart(2, '0')}`,
   });
@@ -57,7 +57,7 @@ for (let i = 1; i <= 100; i++) {
     title: `Awesome product ${i}`,
     description: `Description for product number ${i}. This is a great item to have.`,
     imageUrl: `https://picsum.photos/seed/${i}/200/200`,
-    price: Math.floor(Math.random() * 10000) / 100, // Price between 0 and 100
+    price: Math.floor(Math.random() * 10000) / 100,
     category: generateRandom(categories),
     city: generateRandom(cities),
   });
@@ -72,14 +72,11 @@ const seedDB = async () => {
     console.log('Creating users...');
     const createdUsers = [];
     for (const userData of usersData) {
-      // heširanje lozinke ručno ili oslanjanje na pre-save middleware?
-      // Ako imaš pre-save middleware, dovoljno je samo save()
       const user = new User(userData);
-      await user.save(); // ovde će se aktivirati hashiranje iz modela
+      await user.save();
       createdUsers.push(user);
     }
 
-    // Poveži oglase sa korisnicima
     adsData.forEach((ad, index) => {
       const userIndex = index % createdUsers.length;
       ad.user = createdUsers[userIndex]._id;
