@@ -52,13 +52,13 @@ const Wrapper = styled.nav`
     border: none;
     border-radius: var(--border-radius);
     letter-spacing: var(--letter-spacing);
-    padding: 0.375rem 0.75rem;
+    padding: 0.75rem 1.25rem;
     box-shadow: var(--shadow-1);
     transition: var(--transition);
     text-transform: capitalize;
     margin-left: 1rem;
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: 1rem;
 
     &:hover {
       color: var(--primary-200);
