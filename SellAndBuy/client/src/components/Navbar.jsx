@@ -1,14 +1,45 @@
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import Wrapper from '../assets/wrappers/Navbar';
 
 const Navbar = () => {
-  return (
-    <nav>
-      <Link to="/">Home</Link>
+  const [user, setUser] = React.useState(() => {
+    const savedUser = localStorage.getItem('user');
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
 
-      <Link to="/login">Login</Link>
-      <Link to="/register">Register</Link>
-      <Link to="/ads/new">New Ad</Link>
-    </nav>
+  const navigate = useNavigate();
+
+  const handleSignOut = () => {
+    localStorage.removeItem('user');
+    setUser(null);
+    navigate('/');
+  };
+
+  return (
+    <Wrapper>
+      <div className="nav-center">
+        <Link to="/" className="logo">
+          <img src="/SellAndBuy.png" alt="SellAndBuy logo" />
+        </Link>
+        <div className="btn-container">
+          {user ? (
+            <>
+              <span className="user-greeting">Hello, {user.username}</span>
+              <button onClick={() => navigate('/add-ad')}>Add Ad</button>
+              <button className="btn-danger" onClick={handleSignOut}>
+                Sign Out
+              </button>
+            </>
+          ) : (
+            <>
+              <button onClick={() => navigate('/login')}>Login</button>
+              <button onClick={() => navigate('/register')}>Sign Up</button>
+            </>
+          )}
+        </div>
+      </div>
+    </Wrapper>
   );
 };
 
