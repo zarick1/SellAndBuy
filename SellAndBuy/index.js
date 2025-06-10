@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 require('dotenv').config({ path: './config.env' });
 
 const userRouter = require('./routes/userRoutes');
@@ -12,6 +13,7 @@ const app = express();
 //console.log(process.env);
 
 app.use(cors());
+app.use(cookieParser());
 app.use(express.json());
 
 const DB = process.env.DATABASE.replace(

@@ -16,16 +16,16 @@ const createSendToken = (user, statusCode, res) => {
       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
     ),
     httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
   };
-  if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
 
-  res.cookie('jwt', token, cookieOptions);
+  res.cookie('jwToken', token, cookieOptions);
 
   user.password = undefined;
 
   res.status(statusCode).json({
     status: 'success',
-    token,
+    msg: 'user logged in',
     data: {
       user,
     },
@@ -75,20 +75,18 @@ exports.login = async (req, res, next) => {
 exports.protect = async (req, res, next) => {
   try {
     // 1) Getting token and check if it exists
-    let token;
-    if (
-      req.headers.authorization &&
-      req.headers.authorization.startsWith('Bearer')
-    )
-      token = req.headers.authorization.split(' ')[1];
+    const { jwToken } = req.cookies;
 
-    if (!token)
+    if (!jwToken)
       return next(
-        new AppError('You are not logged in! Please log in to get access', 401)
+        new AppError('Authentication invalid, please provide jwt token', 401)
       );
 
     // 2) Validate token
-    const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+    const decoded = await promisify(jwt.verify)(
+      jwToken,
+      process.env.JWT_SECRET
+    );
 
     // 3) Check if user still exists
     const freshUser = await User.findById(decoded.id);
@@ -103,10 +101,23 @@ exports.protect = async (req, res, next) => {
     req.user = freshUser;
     next();
   } catch (err) {
+    console.log('nesto');
     res.status(400).json({
       status: 'error',
       message: err.message,
       name: err.name,
     });
   }
+};
+
+exports.logout = (req, res, next) => {
+  const cookieOptions = {
+    expires: new Date(Date.now()),
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+  };
+
+  res.cookie('jwToken', 'logout', cookieOptions);
+
+  res.status(200).json({ msg: 'user logged out' });
 };
