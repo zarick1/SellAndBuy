@@ -7,6 +7,7 @@ import Register from './pages/Register';
 import AdDetails from './pages/AdDetails';
 import AddEditAd from './pages/AddEditAd';
 import Error from './pages/Error';
+import { action as registerAction } from './pages/Register';
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,7 @@ const router = createBrowserRouter([
       {
         path: 'register',
         element: <Register />,
+        action: registerAction,
       },
       {
         path: 'ads/:id',
