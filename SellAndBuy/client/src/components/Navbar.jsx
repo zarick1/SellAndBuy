@@ -1,33 +1,24 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Wrapper from '../assets/wrappers/Navbar';
+import Logo from './Logo';
 
 const Navbar = () => {
-  const [user, setUser] = React.useState(() => {
-    const savedUser = localStorage.getItem('user');
-    return savedUser ? JSON.parse(savedUser) : null;
-  });
-
   const navigate = useNavigate();
 
-  const handleSignOut = () => {
-    localStorage.removeItem('user');
-    setUser(null);
-    navigate('/');
-  };
-
+  const user = false;
   return (
     <Wrapper>
       <div className="nav-center">
         <Link to="/" className="logo">
-          <img src="/SellAndBuy.png" alt="SellAndBuy logo" />
+          <Logo />
         </Link>
         <div className="btn-container">
           {user ? (
             <>
               <span className="user-greeting">Hello, {user.username}</span>
               <button onClick={() => navigate('/add-ad')}>Add Ad</button>
-              <button className="btn-danger" onClick={handleSignOut}>
+              <button className="btn-danger" onClick="">
                 Sign Out
               </button>
             </>

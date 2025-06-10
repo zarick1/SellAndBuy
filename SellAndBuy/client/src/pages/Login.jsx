@@ -1,43 +1,28 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Wrapper from '../assets/wrappers/Login';
+import FormRow from '../components/FormRow';
+import Logo from '../components/Logo';
+import Wrapper from '../assets/wrappers/RegisterAndLogin';
+
+import { Link } from 'react-router-dom';
 
 const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const navigate = useNavigate();
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    // Simulate login
-    localStorage.setItem('user', JSON.stringify({ username }));
-    navigate('/');
-  };
-
   return (
     <Wrapper>
-      <div className="form-container">
-        <h3>Login</h3>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            placeholder="Username"
-            required
-            value={username}
-            onChange={e => setUsername(e.target.value)}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            required
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-          />
-          <button type="submit">Login</button>
-        </form>
-      </div>
+      <form className="form">
+        <Logo />
+        <h4>Login</h4>
+        <FormRow type="text" name="username" defaultValue="krsto" />
+        <FormRow type="password" name="password" defaultValue="nesto" />
+        <button type="submit" className="btn btn-block">
+          submit
+        </button>
+        <p>
+          Not a member yet?
+          <Link to="/register" className="member-btn">
+            Register
+          </Link>
+        </p>
+      </form>
     </Wrapper>
   );
 };
-
 export default Login;

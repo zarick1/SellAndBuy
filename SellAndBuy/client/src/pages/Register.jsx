@@ -1,87 +1,28 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Wrapper from '../assets/wrappers/Register';
+import Logo from '../components/Logo';
+import Wrapper from '../assets/wrappers/RegisterAndLogin';
+import FormRow from '../components/FormRow';
+import { Link } from 'react-router-dom';
 
 const Register = () => {
-  const [formData, setFormData] = useState({
-    username: '',
-    phone: '',
-    password: '',
-    confirmPassword: '',
-  });
-
-  const navigate = useNavigate();
-
-  const handleChange = e => {
-    const { name, value } = e.target;
-
-    if (name === 'phone' && !/^\d*$/.test(value)) {
-      return; // samo cifre dozvoljene
-    }
-
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = e => {
-    e.preventDefault();
-
-    if (formData.password !== formData.confirmPassword) {
-      alert("Passwords don't match!");
-      return;
-    }
-
-    console.log('Register data:', formData);
-    navigate('/login');
-  };
-
   return (
     <Wrapper>
-      <h2>Create Account</h2>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="username">Username</label>
-        <input
-          type="text"
-          id="username"
-          name="username"
-          value={formData.username}
-          onChange={handleChange}
-          required
-        />
-
-        <label htmlFor="phone">Phone Number</label>
-        <input
-          type="text"
-          id="phone"
-          name="phone"
-          value={formData.phone}
-          onChange={handleChange}
-          required
-        />
-
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-          required
-        />
-
-        <label htmlFor="confirmPassword">Confirm Password</label>
-        <input
-          type="password"
-          id="confirmPassword"
-          name="confirmPassword"
-          value={formData.confirmPassword}
-          onChange={handleChange}
-          required
-        />
-
-        <button type="submit">Register</button>
+      <form className="form">
+        <Logo />
+        <h4>Register</h4>
+        <FormRow type="text" name="name" defaultValue="krsto" />
+        <FormRow type="password" name="password" defaultValue="nesto" />
+        <FormRow type="text" name="phone" defaultValue="nesto" />
+        <button type="submit" className="btn btn-block">
+          submit
+        </button>
+        <p>
+          Already a member?
+          <Link to="/login" className="member-btn">
+            Login
+          </Link>
+        </p>
       </form>
     </Wrapper>
   );
 };
-
 export default Register;

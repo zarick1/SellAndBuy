@@ -33,6 +33,7 @@ const Wrapper = styled.nav`
       width: auto;
       display: block;
       border-radius: 8px;
+      padding: 15px;
     }
 
     &:hover {
@@ -78,6 +79,7 @@ const Wrapper = styled.nav`
   }
 
   .user-greeting {
+    font-size: 32px;
     margin-right: 1rem;
     font-weight: 600;
     color: var(--primary-700);
