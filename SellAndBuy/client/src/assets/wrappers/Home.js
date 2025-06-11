@@ -152,116 +152,94 @@ const Wrapper = styled.div`
       grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     }
   }
-  .filter-bar {
-    background: white;
-    padding: 1.5rem;
-    border-radius: 10px;
+
+  .filter-bar-wrapper {
+    background-color: #f9f9f9;
+    padding: 2rem;
+    border-radius: 1rem;
     margin-bottom: 2rem;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    border: 1px solid #e9ecef;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   }
 
   .filter-form {
     display: flex;
-    flex-wrap: wrap;
-    gap: 1.2rem;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .form-title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #2d2d2d;
+    margin-bottom: 1rem;
+    letter-spacing: 0.5px;
+  }
+
+  .filters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
   }
 
   .form-row {
     display: flex;
     flex-direction: column;
-    min-width: 200px;
-    flex-grow: 1;
   }
 
-  .form-row label {
+  .form-label {
     margin-bottom: 0.5rem;
     font-weight: 500;
-    color: #495057;
-    font-size: 0.9rem;
+    color: #333;
   }
 
-  .form-row select,
-  .form-row input[type='text'],
-  .form-row input[type='number'] {
-    padding: 0.6rem 0.8rem;
-    border: 1px solid #ced4da;
-    border-radius: 6px;
-    font-size: 0.9rem;
-    transition: all 0.2s;
+  .form-input,
+  .form-select {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    font-size: 1rem;
   }
 
-  .form-row select:focus,
-  .form-row input[type='text']:focus,
-  .form-row input[type='number']:focus {
-    outline: none;
-    border-color: #80bdff;
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  .price-range-row {
+    display: flex;
+    flex-direction: column;
   }
 
-  .price-range .price-inputs {
+  .price-range-inputs {
     display: flex;
     align-items: center;
     gap: 0.5rem;
   }
 
   .price-separator {
-    color: #6c757d;
-    font-weight: bold;
+    font-size: 1.2rem;
+    color: #666;
   }
 
   .checkbox-row {
-    flex-direction: row;
+    display: flex;
     align-items: center;
     gap: 0.5rem;
-    cursor: pointer;
+    margin-bottom: 1rem;
   }
 
-  .checkbox-row input[type='checkbox'] {
-    cursor: pointer;
-  }
-
-  .checkbox-row label {
-    margin-bottom: 0;
-    cursor: pointer;
+  .form-footer {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    align-items: center;
   }
 
   .button-group {
     display: flex;
     gap: 1rem;
-    align-items: flex-end;
   }
 
-  .btn {
-    padding: 0.6rem 1.2rem;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: all 0.2s;
-  }
-
-  .btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-
-  .apply-btn {
-    background: #007bff;
-    color: white;
-  }
-
-  .apply-btn:hover {
-    background: #0069d9;
-  }
-
-  .reset-btn {
-    background: #6c757d;
-    color: white;
-  }
-
-  .reset-btn:hover {
-    background: #5a6268;
+  .checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
   }
 
   .pagination {

@@ -32,10 +32,10 @@ const Register = () => {
       <Form method="post" className="form">
         <Logo />
         <h4>Register</h4>
-        <FormRow type="text" name="username" defaultValue="krsto" />
-        <FormRow type="password" name="password" defaultValue="nesto" />
-        <FormRow type="password" name="passwordConfirm" defaultValue="nesto" />
-        <FormRow type="text" name="phone" defaultValue="nesto" />
+        <FormRow type="text" name="username" required={true} />
+        <FormRow type="password" name="password" required={true} />
+        <FormRow type="password" name="passwordConfirm" required={true} />
+        <FormRow type="text" name="phone" required={true} />
         <button type="submit" className="btn btn-block" disabled={isSubmitting}>
           {isSubmitting ? 'registration...' : 'register'}
         </button>
