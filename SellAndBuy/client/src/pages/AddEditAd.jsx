@@ -9,7 +9,7 @@ export const action = async ({ request }) => {
   console.log(data);
 
   try {
-    await axios.post('/api/v1/ads/post', data);
+    await axios.post('/api/v1/ads/post', data, { withCredentials: true });
     //console.log(data);
     toast.success('Creating your ad');
     return redirect('/');

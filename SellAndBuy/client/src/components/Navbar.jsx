@@ -12,11 +12,13 @@ import axios from 'axios';
 
 export const loader = async () => {
   try {
-    const { data } = await axios.get('/api/v1/users/current-user');
+    const { data } = await axios.get('/api/v1/users/current-user', {
+      withCredentials: true,
+    });
     return data;
   } catch (err) {
-    console.log(err);
-    return { data: { user: undefined } };
+    //console.error(err);
+    return { data: { user: null } };
   }
 };
 
@@ -28,7 +30,7 @@ const Navbar = () => {
   const revalidator = useRevalidator();
 
   const logoutUser = async () => {
-    await axios.get('/api/v1/users/logout');
+    await axios.get('/api/v1/users/logout', { withCredentials: true });
     toast.success('Logging out');
     revalidator.revalidate();
     navigate('/');

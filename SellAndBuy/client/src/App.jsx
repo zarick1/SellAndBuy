@@ -11,6 +11,7 @@ import { action as registerAction } from './pages/Register';
 import { action as loginAction } from './pages/Login';
 import { action as addAdAction } from './pages/AddEditAd';
 import { loader as navbarLoader } from './components/Navbar';
+import { loader as homeLoader } from './pages/Home';
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,7 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+        loader: homeLoader,
       },
       {
         path: 'login',

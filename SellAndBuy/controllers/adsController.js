@@ -6,7 +6,16 @@ const APIFeatures = require('../utils/apiFeatures');
 
 exports.getAllAds = async (req, res, next) => {
   try {
-    const features = new APIFeatures(Ad.find(), qs.parse(req._parsedUrl.query))
+    const queryParams = qs.parse(req._parsedUrl.query);
+
+    const baseQuery = new APIFeatures(Ad.find(), queryParams).filter().search();
+
+    const totalResults = await baseQuery.query.clone().countDocuments();
+    const limit = +queryParams.limit || 100;
+    const numOfPages = Math.ceil(totalResults / limit);
+
+    const features = new APIFeatures(Ad.find(), queryParams)
+      .search()
       .filter()
       .sort()
       .limitFields()
@@ -17,6 +26,8 @@ exports.getAllAds = async (req, res, next) => {
     res.status(200).json({
       status: 'success',
       results: ads.length,
+      totalResults,
+      numOfPages,
       data: {
         ads,
       },
@@ -24,7 +35,7 @@ exports.getAllAds = async (req, res, next) => {
   } catch (err) {
     res.status(400).json({
       status: 'error',
-      err,
+      message: err.message,
     });
   }
 };

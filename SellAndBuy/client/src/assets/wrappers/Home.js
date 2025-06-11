@@ -10,6 +10,12 @@ const Wrapper = styled.div`
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 1.5rem;
   }
+  .no-results {
+    text-align: center;
+    margin: 2rem 0;
+    font-size: 1.2rem;
+    color: var(--grey-500);
+  }
 
   .ad-card {
     border: 1px solid #e0e0e0;
