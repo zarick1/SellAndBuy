@@ -8,6 +8,7 @@ import AdDetails from './pages/AdDetails';
 import AddEditAd from './pages/AddEditAd';
 import Error from './pages/Error';
 import { action as registerAction } from './pages/Register';
+import { action as loginAction } from './pages/Login';
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,7 @@ const router = createBrowserRouter([
       {
         path: 'login',
         element: <Login />,
+        action: loginAction,
       },
       {
         path: 'register',

@@ -2,18 +2,38 @@ import FormRow from '../components/FormRow';
 import Logo from '../components/Logo';
 import Wrapper from '../assets/wrappers/RegisterAndLogin';
 
-import { Link } from 'react-router-dom';
+import { Link, redirect, Form, useNavigation } from 'react-router-dom';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+
+export const action = async ({ request }) => {
+  const formData = await request.formData();
+  const data = Object.fromEntries(formData);
+
+  try {
+    await axios.post('/api/v1/users/login', data);
+    toast.success('Login successful');
+    return redirect('/');
+  } catch (err) {
+    console.log(err);
+    toast.error(err?.response?.data?.err?.message || 'Login failed');
+    return null;
+  }
+};
 
 const Login = () => {
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state === 'submitting';
+
   return (
     <Wrapper>
-      <form className="form">
+      <Form method="post" className="form">
         <Logo />
         <h4>Login</h4>
         <FormRow type="text" name="username" defaultValue="krsto" />
         <FormRow type="password" name="password" defaultValue="nesto" />
-        <button type="submit" className="btn btn-block">
-          submit
+        <button type="submit" className="btn btn-block" disabled={isSubmitting}>
+          {isSubmitting ? 'Logging in...' : 'Login'}
         </button>
         <p>
           Not a member yet?
@@ -21,7 +41,7 @@ const Login = () => {
             Register
           </Link>
         </p>
-      </form>
+      </Form>
     </Wrapper>
   );
 };

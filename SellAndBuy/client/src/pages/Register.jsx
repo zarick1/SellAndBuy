@@ -17,7 +17,7 @@ export const action = async ({ request }) => {
     return redirect('/');
   } catch (err) {
     console.log(err);
-    toast.error(err?.response?.data?.err.message);
+    toast.error(err?.response?.data?.err.message || 'Registration failed');
 
     return err;
   }
@@ -37,7 +37,7 @@ const Register = () => {
         <FormRow type="password" name="passwordConfirm" defaultValue="nesto" />
         <FormRow type="text" name="phone" defaultValue="nesto" />
         <button type="submit" className="btn btn-block" disabled={isSubmitting}>
-          {isSubmitting ? 'submitting...' : 'submit'}
+          {isSubmitting ? 'registration...' : 'register'}
         </button>
         <p>
           Already a member?
