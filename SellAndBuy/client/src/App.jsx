@@ -9,6 +9,7 @@ import AddEditAd from './pages/AddEditAd';
 import Error from './pages/Error';
 import { action as registerAction } from './pages/Register';
 import { action as loginAction } from './pages/Login';
+import { loader as navbarLoader } from './components/Navbar';
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,7 @@ const router = createBrowserRouter([
       </>
     ),
     errorElement: <Error />,
+    loader: navbarLoader,
     children: [
       {
         index: true,

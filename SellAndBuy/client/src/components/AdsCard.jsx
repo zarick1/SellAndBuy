@@ -21,7 +21,7 @@ const AdsCard = () => {
       image: 'https://via.placeholder.com/300x200?text=Leather+Sofa',
     },
     {
-      id: 1,
+      id: 3,
       name: 'iPhone 13 Pro',
       price: 899,
       city: 'New York',
@@ -29,7 +29,7 @@ const AdsCard = () => {
       image: 'https://via.placeholder.com/300x200?text=iPhone+13+Pro',
     },
     {
-      id: 2,
+      id: 4,
       name: 'Leather Sofa',
       price: 450,
       city: 'Chicago',
@@ -37,7 +37,7 @@ const AdsCard = () => {
       image: 'https://via.placeholder.com/300x200?text=Leather+Sofa',
     },
     {
-      id: 1,
+      id: 5,
       name: 'iPhone 13 Pro',
       price: 899,
       city: 'New York',
@@ -45,7 +45,7 @@ const AdsCard = () => {
       image: 'https://via.placeholder.com/300x200?text=iPhone+13+Pro',
     },
     {
-      id: 2,
+      id: 6,
       name: 'Leather Sofa',
       price: 450,
       city: 'Chicago',

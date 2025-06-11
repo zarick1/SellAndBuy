@@ -1,12 +1,39 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import {
+  Link,
+  useNavigate,
+  redirect,
+  useLoaderData,
+  useRevalidator,
+} from 'react-router-dom';
+import { toast } from 'react-toastify';
 import Wrapper from '../assets/wrappers/Navbar';
 import Logo from './Logo';
+import axios from 'axios';
+
+export const loader = async () => {
+  try {
+    const { data } = await axios.get('/api/v1/users/current-user');
+    return data;
+  } catch (err) {
+    console.log(err);
+    return { data: { user: undefined } };
+  }
+};
 
 const Navbar = () => {
+  const data = useLoaderData();
+  const { user } = data.data;
+  //console.log(data);
   const navigate = useNavigate();
+  const revalidator = useRevalidator();
 
-  const user = false;
+  const logoutUser = async () => {
+    await axios.get('/api/v1/users/logout');
+    toast.success('Logging out');
+    revalidator.revalidate();
+    navigate('/');
+  };
   return (
     <Wrapper>
       <div className="nav-center">
@@ -18,8 +45,8 @@ const Navbar = () => {
             <>
               <span className="user-greeting">Hello, {user.username}</span>
               <button onClick={() => navigate('/add-ad')}>Add Ad</button>
-              <button className="btn-danger" onClick="">
-                Sign Out
+              <button className="btn-danger" onClick={logoutUser}>
+                Log Out
               </button>
             </>
           ) : (
