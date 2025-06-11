@@ -11,7 +11,8 @@ exports.getAllAds = async (req, res, next) => {
     const baseQuery = new APIFeatures(Ad.find(), queryParams).filter().search();
 
     const totalResults = await baseQuery.query.clone().countDocuments();
-    const limit = +queryParams.limit || 100;
+    const limit = +queryParams.limit || 20;
+    const currentPage = +queryParams.page || 1;
     const numOfPages = Math.ceil(totalResults / limit);
 
     const features = new APIFeatures(Ad.find(), queryParams)
@@ -28,6 +29,7 @@ exports.getAllAds = async (req, res, next) => {
       results: ads.length,
       totalResults,
       numOfPages,
+      currentPage,
       data: {
         ads,
       },

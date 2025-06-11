@@ -241,60 +241,6 @@ const Wrapper = styled.div`
     align-items: center;
     gap: 0.5rem;
   }
-
-  .pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
-    margin: 3rem 0;
-    flex-wrap: wrap;
-  }
-
-  .page-nav,
-  .page-btn {
-    padding: 0.6rem 1rem;
-    border: 1px solid #dee2e6;
-    background: white;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.2s;
-    font-size: 0.9rem;
-    min-width: 40px;
-    text-align: center;
-  }
-
-  .page-nav:hover:not(:disabled),
-  .page-btn:hover:not(.active) {
-    background: #f8f9fa;
-    border-color: #ced4da;
-    transform: translateY(-2px);
-  }
-
-  .page-nav:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-
-  .page-btn.active {
-    background: #007bff;
-    color: white;
-    border-color: #007bff;
-    font-weight: 500;
-  }
-
-  .ellipsis {
-    padding: 0.6rem 0.2rem;
-    color: #6c757d;
-  }
-
-  .page-info {
-    width: 100%;
-    text-align: center;
-    margin-top: 1rem;
-    color: #6c757d;
-    font-size: 0.9rem;
-  }
 `;
 
 export default Wrapper;

@@ -7,30 +7,37 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import { useLoaderData } from 'react-router-dom';
 
-export const loader = async ({ request }) => {
-  console.log(request.url);
-  const rawParams = Object.fromEntries([
-    ...new URL(request.url).searchParams.entries(),
-  ]);
+const createParams = rawParams => {
   const params = {};
 
   if (rawParams.search?.trim()) params.search = rawParams.search;
   if (rawParams.category && rawParams.category !== 'All')
     params.category = rawParams.category.toLowerCase();
+  if (rawParams.page) params.page = rawParams.page;
 
   if (rawParams.minPrice) params['price[gte]'] = rawParams.minPrice;
   if (rawParams.maxPrice) params['price[lte]'] = rawParams.maxPrice;
 
+  return params;
+};
+
+export const loader = async ({ request }) => {
+  const rawParams = Object.fromEntries([
+    ...new URL(request.url).searchParams.entries(),
+  ]);
+
   let endpoint = '/api/v1/ads/getAllAds?sort=-createdAt';
   if (rawParams.showMineOnly === 'on') endpoint = '/api/v1/ads/my-ads';
 
+  const params = createParams(rawParams);
   //console.log(params);
 
   try {
     const { data } = await axios.get(endpoint, {
       params,
     });
-    return data.data;
+
+    return data;
   } catch (error) {
     toast.error(error?.response?.data?.msg || 'Error loading ads');
     return [];
@@ -38,13 +45,27 @@ export const loader = async ({ request }) => {
 };
 
 const Home = () => {
-  const { ads } = useLoaderData();
+  const data = useLoaderData();
   //const data = { ads: [] };
+  console.log(data);
+  const { totalResults, numOfPages, currentPage } = data;
+  console.log(totalResults, numOfPages, currentPage);
+
+  const ads = data.data.ads;
   return (
     <Wrapper>
       <FilterBar />
+      <h5>
+        {totalResults} ad{ads.length > 1 && 's'} found
+      </h5>
       <AdsCard ads={ads} />
-      <Pagination />
+      {numOfPages > 1 && (
+        <Pagination
+          totalResults={totalResults}
+          numOfPages={numOfPages}
+          currentPage={currentPage}
+        />
+      )}
     </Wrapper>
   );
 };
