@@ -9,6 +9,7 @@ import AddEditAd from './pages/AddEditAd';
 import Error from './pages/Error';
 import { action as registerAction } from './pages/Register';
 import { action as loginAction } from './pages/Login';
+import { action as addAdAction } from './pages/AddEditAd';
 import { loader as navbarLoader } from './components/Navbar';
 
 const router = createBrowserRouter([
@@ -46,6 +47,7 @@ const router = createBrowserRouter([
       {
         path: 'add-ad',
         element: <AddEditAd />,
+        action: addAdAction,
       },
       {
         path: 'edit-ad/:id',

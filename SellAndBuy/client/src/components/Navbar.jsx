@@ -2,7 +2,6 @@ import React from 'react';
 import {
   Link,
   useNavigate,
-  redirect,
   useLoaderData,
   useRevalidator,
 } from 'react-router-dom';
