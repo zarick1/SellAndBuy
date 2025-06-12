@@ -3,9 +3,7 @@ import { HiChevronDoubleLeft, HiChevronDoubleRight } from 'react-icons/hi';
 
 import Wrapper from '../assets/wrappers/Pagination';
 
-const Pagination = ({ totalResults, numOfPages, currentPage }) => {
-  const pages = Array.from({ length: numOfPages }, (__, index) => index + 1);
-
+const Pagination = ({ numOfPages, currentPage }) => {
   const { search, pathname } = useLocation();
   const navigate = useNavigate();
 

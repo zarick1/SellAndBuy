@@ -1,10 +1,10 @@
-import FormRow from '../components/FormRow';
-import Logo from '../components/Logo';
-import Wrapper from '../assets/wrappers/RegisterAndLogin';
-
 import { Link, redirect, Form, useNavigation } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+
+import FormRow from '../components/FormRow';
+import Logo from '../components/Logo';
+import Wrapper from '../assets/wrappers/RegisterAndLogin';
 
 export const action = async ({ request }) => {
   const formData = await request.formData();

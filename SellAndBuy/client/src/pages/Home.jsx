@@ -1,11 +1,11 @@
+import { toast } from 'react-toastify';
+import axios from 'axios';
+import { useLoaderData } from 'react-router-dom';
+
 import Wrapper from '../assets/wrappers/Home';
 import FilterBar from '../components/FilterBar';
 import AdsCard from '../components/AdsCard';
 import Pagination from '../components/Pagination';
-
-import { toast } from 'react-toastify';
-import axios from 'axios';
-import { useLoaderData } from 'react-router-dom';
 
 const createParams = rawParams => {
   const params = {};

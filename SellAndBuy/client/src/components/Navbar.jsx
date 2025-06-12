@@ -6,9 +6,10 @@ import {
   useRevalidator,
 } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import axios from 'axios';
+
 import Wrapper from '../assets/wrappers/Navbar';
 import Logo from './Logo';
-import axios from 'axios';
 
 export const loader = async () => {
   try {

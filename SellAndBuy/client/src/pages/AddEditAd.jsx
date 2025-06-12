@@ -57,75 +57,65 @@ const AddEditAd = () => {
   return (
     <Wrapper>
       <h2>{isEditing ? 'Edit Ad' : 'Add New Ad'}</h2>
-      <Form method="post" className="form">
-        <div className="form-row">
-          <label htmlFor="title">Title</label>
-          <input
-            type="text"
-            id="title"
-            name="title"
-            defaultValue={ad?.title || ''}
-          />
-        </div>
+      <Form method="post" className="form" key={isEditing ? ad?._id : 'new'}>
+        <FormRow
+          type="text"
+          name="title"
+          labelText="Title"
+          defaultValue={ad?.title || ''}
+        />
 
         <div className="form-row">
-          <label htmlFor="description">Description</label>
+          <label htmlFor="description" className="form-label">
+            Description
+          </label>
           <textarea
             id="description"
             name="description"
-            rows="4"
+            rows="8"
+            className="form-input"
             defaultValue={ad?.description || ''}
+            style={{ minHeight: '160px', resize: 'vertical' }}
           />
         </div>
 
-        <div className="form-row">
-          <label htmlFor="image">Image URL</label>
-          <input
-            type="text"
-            id="image"
-            name="imageUrl"
-            defaultValue={ad?.imageUrl || ''}
-          />
-        </div>
+        <FormRow
+          type="text"
+          name="imageUrl"
+          labelText="Image URL"
+          defaultValue={ad?.imageUrl || ''}
+        />
 
-        <div className="form-row">
-          <label htmlFor="price">Price ($)</label>
-          <input
-            type="number"
-            id="price"
-            name="price"
-            defaultValue={ad?.price || ''}
-          />
-        </div>
+        <FormRow
+          type="number"
+          name="price"
+          labelText="Price (€)"
+          defaultValue={ad?.price || ''}
+        />
 
-        <div className="form-row">
-          <label htmlFor="city">City</label>
-          <input
-            type="text"
-            id="city"
-            name="city"
-            defaultValue={ad?.city || ''}
-          />
-        </div>
+        <FormRow
+          type="text"
+          name="city"
+          labelText="City"
+          defaultValue={ad?.city || ''}
+        />
 
-        <div className="form-row">
-          <label htmlFor="category">Category</label>
-          <select
-            id="category"
-            name="category"
-            defaultValue={ad?.category || 'clothing'}
-          >
-            <option value="clothing">Clothing</option>
-            <option value="tools">Tools</option>
-            <option value="sports">Sports</option>
-            <option value="accessories">Accessories</option>
-            <option value="furniture">Furniture</option>
-            <option value="pets">Pets</option>
-            <option value="games">Games</option>
-            <option value="books">Books</option>
-            <option value="technology">Technology</option>
-          </select>
-        </div>
+        <FormRowSelect
+          name="category"
+          labelText="Category"
+          defaultValue={ad?.category || ''}
+          list={[
+            'clothing',
+            'tools',
+            'sports',
+            'accessories',
+            'furniture',
+            'pets',
+            'games',
+            'books',
+            'technology',
+          ]}
+        />
 
         <button type="submit" className="btn btn-block" disabled={isSubmitting}>
           {isSubmitting

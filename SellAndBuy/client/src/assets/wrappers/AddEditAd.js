@@ -4,7 +4,7 @@ const Wrapper = styled.section`
   background: var(--white);
   border-radius: var(--borderRadius);
   padding: 2rem;
-  max-width: 600px;
+  max-width: 800px;
   margin: 0 auto;
 
   h2 {
@@ -40,6 +40,29 @@ const Wrapper = styled.section`
 
   .btn-block {
     margin-top: 1rem;
+  }
+
+  .form-input,
+  .form-select,
+  textarea {
+    padding: 0.75rem;
+    height: 3rem;
+    border: 1px solid var(--grey-300);
+    border-radius: var(--borderRadius);
+    font-size: 1rem;
+    width: 100%;
+  }
+
+  .form-label {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .form-row {
+    display: flex;
+
+    flex-direction: column;
   }
 `;
 
