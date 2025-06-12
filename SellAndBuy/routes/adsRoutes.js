@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.route('/getAllAds').get(adsController.getAllAds);
 
-router.route('/get-ad/:id').get(adsController.getAd);
+router.route('/get-ad/:id').get(authController.protect, adsController.getAd);
 
 // Protected routes
 router.route('/my-ads').get(authController.protect, adsController.getMyAds);

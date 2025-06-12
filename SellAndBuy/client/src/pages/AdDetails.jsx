@@ -1,25 +1,58 @@
 import React from 'react';
 import axios from 'axios';
-import { useLoaderData } from 'react-router-dom';
+import { redirect, useLoaderData, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import Wrapper from '../assets/wrappers/AdDetails';
 
 export const loader = async ({ params }) => {
   try {
-    const { data } = await axios.get(`/api/v1/ads/get-ad/${params.id}`);
-    console.log(data);
+    const userRes = await axios.get('/api/v1/users/current-user', {
+      withCredentials: true,
+    });
 
-    return data.data.ad;
+    const user = userRes.data?.data?.user;
+
+    if (!user) {
+      return redirect('/login');
+    }
+
+    const { data } = await axios.get(`/api/v1/ads/get-ad/${params.id}`, {
+      withCredentials: true,
+    });
+    //console.log(data);
+
+    return { ad: data.data.ad, user };
   } catch (error) {
     console.error('Error fetching ad details:', error);
-    return error;
+    return redirect('/login');
   }
 };
 
 const AdDetails = () => {
-  const ad = useLoaderData();
-  console.log(ad);
+  const { ad, user } = useLoaderData();
+  const navigate = useNavigate();
+
+  const isOwner = ad.user._id === user._id;
+  //console.log(isOwner);
+
+  const handleDelete = async adId => {
+    const confirmed = window.confirm(
+      'Are you sure you want to delete this ad?'
+    );
+
+    if (!confirmed) return;
+
+    try {
+      await axios.delete(`/api/v1/ads/delete-ad/${adId}`, {
+        withCredentials: true,
+      });
+      toast.success('Ad successfully deleted!');
+      navigate('/');
+    } catch (error) {
+      toast.error(error.response?.data?.msg || 'Failed to delete ad');
+    }
+  };
 
   return (
     <Wrapper>
@@ -28,16 +61,12 @@ const AdDetails = () => {
           <h1>{ad.title}</h1>
           <div className="price">{ad.price}</div>
         </div>
-
         <div className="ad-content">
-          {/* Image Gallery */}
           <div className="image-gallery">
             <div className="main-image">
               <img src={ad.imageUrl} alt="Main" />
             </div>
           </div>
-
-          {/* Details Section */}
           <div className="details-section">
             <div className="details-card">
               <h3>Details</h3>
@@ -64,16 +93,28 @@ const AdDetails = () => {
                 <span className="detail-value">{ad.user.username}</span>
               </div>
             </div>
-
-            {/* Contact Section */}
             <div className="contact-card">
               <h3>Contact Seller</h3>
               <p>{ad.user.phone}</p>
               <button className="contact-btn">Send Message</button>
             </div>
+            {isOwner && (
+              <div className="owner-actions">
+                <button
+                  className="edit-btn"
+                  onClick={() => navigate(`/edit-ad/${ad._id}`)}
+                >
+                  Edit
+                </button>
+                <button
+                  className="delete-btn"
+                  onClick={() => handleDelete(ad._id)}
+                >
+                  Delete
+                </button>
+              </div>
+            )}
           </div>
-
-          {/* Description */}
           <div className="description-section">
             <h3>Description</h3>
             <p>{ad.description}</p>

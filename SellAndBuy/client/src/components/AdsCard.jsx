@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaEdit, FaTrash } from 'react-icons/fa';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, Navigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
@@ -8,7 +8,6 @@ const AdsCard = ({ ads = [], user }) => {
   if (ads.length === 0) {
     return <p className="no-results">There are no active ads.</p>;
   }
-
   const navigate = useNavigate();
 
   const handleDelete = async adId => {
@@ -48,7 +47,10 @@ const AdsCard = ({ ads = [], user }) => {
 
             {user && user._id === ad.user._id && (
               <div className="ad-actions">
-                <button className="edit-btn">
+                <button
+                  className="edit-btn"
+                  onClick={() => navigate(`/edit-ad/${ad._id}`)}
+                >
                   <FaEdit /> Edit
                 </button>
                 <button

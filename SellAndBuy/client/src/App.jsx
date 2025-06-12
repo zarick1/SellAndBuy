@@ -13,6 +13,7 @@ import { action as addAdAction } from './pages/AddEditAd';
 import { loader as navbarLoader } from './components/Navbar';
 import { loader as homeLoader } from './pages/Home';
 import { loader as adDetailsLoader } from './pages/AdDetails';
+import { loader as editAddLoader } from './pages/AddEditAd';
 
 const router = createBrowserRouter([
   {
@@ -52,10 +53,13 @@ const router = createBrowserRouter([
         path: 'add-ad',
         element: <AddEditAd />,
         action: addAdAction,
+        loader: editAddLoader,
       },
       {
         path: 'edit-ad/:id',
         element: <AddEditAd />,
+        action: addAdAction,
+        loader: editAddLoader,
       },
     ],
   },

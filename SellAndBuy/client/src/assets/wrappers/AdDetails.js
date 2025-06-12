@@ -198,6 +198,37 @@ const Wrapper = styled.main`
       height: 300px;
     }
   }
+
+  .owner-actions {
+    display: flex;
+    justify-content: flex-start;
+    gap: 12rem;
+    margin-top: -1rem;
+    padding: 0.5rem;
+    border-radius: 8px;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e9ecef;
+  }
+  .edit-btn,
+  .delete-btn {
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    cursor: pointer;
+  }
+
+  .edit-btn {
+    background-color: #007bff;
+    color: white;
+  }
+
+  .delete-btn {
+    background-color: #dc3545;
+    color: white;
+  }
 `;
 
 export default Wrapper;

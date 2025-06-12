@@ -1,17 +1,41 @@
-import Wrapper from '../assets/wrappers/AddEditAd';
-import { Form, redirect, useNavigation } from 'react-router-dom';
+import { Form, redirect, useLoaderData, useNavigation } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-export const action = async ({ request }) => {
-  const formData = await request.formData();
-  const data = Object.fromEntries(formData);
-  console.log(data);
+import Wrapper from '../assets/wrappers/AddEditAd';
+import FormRow from '../components/FormRow';
+import FormRowSelect from '../components/FormRowSelect';
+
+export const loader = async ({ params }) => {
+  if (!params.id) return { ad: null };
 
   try {
-    await axios.post('/api/v1/ads/post', data, { withCredentials: true });
-    //console.log(data);
-    toast.success('Creating your ad');
+    const resAd = await axios.get(`/api/v1/ads/get-ad/${params.id}`, {
+      withCredentials: true,
+    });
+
+    return { ad: resAd.data.data.ad };
+  } catch (err) {
+    console.error('Failed to load ad:', err);
+    return redirect('/');
+  }
+};
+
+export const action = async ({ request, params }) => {
+  const formData = await request.formData();
+  const data = Object.fromEntries(formData);
+
+  try {
+    if (params.id) {
+      await axios.patch(`/api/v1/ads/edit-ad/${params.id}`, data, {
+        withCredentials: true,
+      });
+      toast.success('Ad updated successfully');
+    } else {
+      await axios.post('/api/v1/ads/post', data, { withCredentials: true });
+      //console.log(data);
+      toast.success('Creating your ad');
+    }
     return redirect('/');
   } catch (err) {
     console.log(err);
@@ -25,7 +49,8 @@ export const action = async ({ request }) => {
 };
 
 const AddEditAd = () => {
-  const isEditing = Boolean(0);
+  const { ad } = useLoaderData();
+  const isEditing = Boolean(ad);
   const navigation = useNavigation();
   const isSubmitting = navigation.state === 'submitting';
 
@@ -39,7 +64,7 @@ const AddEditAd = () => {
             type="text"
             id="title"
             name="title"
-            defaultValue="Bicikl na prodaju"
+            defaultValue={ad?.title || ''}
           />
         </div>
 
@@ -49,7 +74,7 @@ const AddEditAd = () => {
             id="description"
             name="description"
             rows="4"
-            defaultValue="Polovan bicikl, malo korišćen."
+            defaultValue={ad?.description || ''}
           />
         </div>
 
@@ -59,23 +84,37 @@ const AddEditAd = () => {
             type="text"
             id="image"
             name="imageUrl"
-            defaultValue="https://via.placeholder.com/150"
+            defaultValue={ad?.imageUrl || ''}
           />
         </div>
 
         <div className="form-row">
-          <label htmlFor="price">Price (EUR)</label>
-          <input type="number" id="price" name="price" defaultValue="100" />
+          <label htmlFor="price">Price ($)</label>
+          <input
+            type="number"
+            id="price"
+            name="price"
+            defaultValue={ad?.price || ''}
+          />
         </div>
 
         <div className="form-row">
           <label htmlFor="city">City</label>
-          <input type="text" id="city" name="city" defaultValue="Bijeljina" />
+          <input
+            type="text"
+            id="city"
+            name="city"
+            defaultValue={ad?.city || ''}
+          />
         </div>
 
         <div className="form-row">
           <label htmlFor="category">Category</label>
-          <select id="category" name="category" defaultValue="sports">
+          <select
+            id="category"
+            name="category"
+            defaultValue={ad?.category || 'clothing'}
+          >
             <option value="clothing">Clothing</option>
             <option value="tools">Tools</option>
             <option value="sports">Sports</option>
