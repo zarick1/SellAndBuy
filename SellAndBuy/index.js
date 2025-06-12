@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 require('dotenv').config({ path: './config.env' });
+const path = require('path');
 
 const userRouter = require('./routes/userRoutes');
 const adsRouter = require('./routes/adsRoutes');
@@ -13,6 +14,7 @@ const app = express();
 //console.log(process.env);
 
 app.use(cors());
+app.use(express.static(path.resolve(__dirname, './public')));
 app.use(cookieParser());
 app.use(express.json());
 
@@ -31,6 +33,11 @@ mongoose.connect(DB).then(() => console.log('Data Base Successfuly connected'));
 // ROUTES
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/ads', adsRouter);
+
+// For deployment
+// app.get('/{*any}', (req, res) => {
+//   res.sendFile(path.resolve(__dirname, './public', 'index.html'));
+// });
 
 app.use(globalErrorHandler);
 

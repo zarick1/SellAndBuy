@@ -1,13 +1,53 @@
-import React from 'react';
-import { Form, Link } from 'react-router-dom';
-
+import React, { useEffect, useState } from 'react';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import FormRow from './FormRow';
 import FormRowSelect from './FormRowSelect';
 
 const FilterBar = ({ user }) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
+
+  const [search, setSearch] = useState('');
+  const [category, setCategory] = useState('All');
+  const [minPrice, setMinPrice] = useState('');
+  const [maxPrice, setMaxPrice] = useState('');
+  const [showMineOnly, setShowMineOnly] = useState(false);
+
+  // Pre-populate vrednosti iz URL-a (ako postoje)
+  useEffect(() => {
+    setSearch(searchParams.get('search') || '');
+    setCategory(searchParams.get('category') || 'All');
+    setMinPrice(searchParams.get('minPrice') || '');
+    setMaxPrice(searchParams.get('maxPrice') || '');
+    setShowMineOnly(searchParams.get('showMineOnly') === 'on');
+  }, [searchParams]);
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    const params = {};
+
+    if (search.trim()) params.search = search;
+    if (category !== 'All') params.category = category;
+    if (minPrice) params.minPrice = minPrice;
+    if (maxPrice) params.maxPrice = maxPrice;
+    if (showMineOnly) params.showMineOnly = 'on';
+
+    setSearchParams(params);
+  };
+
+  const handleReset = () => {
+    setSearch('');
+    setCategory('All');
+    setMinPrice('');
+    setMaxPrice('');
+    setShowMineOnly(false);
+    setSearchParams({});
+    navigate('/');
+  };
+
   return (
     <div className="filter-bar-wrapper">
-      <Form className="filter-form">
+      <form className="filter-form" onSubmit={handleSubmit}>
         <h2 className="form-title">Search</h2>
 
         <div className="filters-grid">
@@ -15,7 +55,8 @@ const FilterBar = ({ user }) => {
             type="search"
             name="search"
             labelText="Search"
-            defaultValue=""
+            value={search}
+            onChange={e => setSearch(e.target.value)}
           />
 
           <FormRowSelect
@@ -33,7 +74,8 @@ const FilterBar = ({ user }) => {
               'Books',
               'Technology',
             ]}
-            defaultValue="All"
+            value={category}
+            onChange={e => setCategory(e.target.value)}
           />
 
           <div className="form-row price-range-row">
@@ -45,7 +87,8 @@ const FilterBar = ({ user }) => {
                 placeholder="Min"
                 className="form-input"
                 min="0"
-                defaultValue=""
+                value={minPrice}
+                onChange={e => setMinPrice(e.target.value)}
               />
               <span className="price-separator">-</span>
               <input
@@ -54,7 +97,8 @@ const FilterBar = ({ user }) => {
                 placeholder="Max"
                 className="form-input"
                 min="0"
-                defaultValue=""
+                value={maxPrice}
+                onChange={e => setMaxPrice(e.target.value)}
               />
             </div>
           </div>
@@ -63,7 +107,13 @@ const FilterBar = ({ user }) => {
         <div className="form-footer">
           {user && (
             <div className="checkbox-row">
-              <input type="checkbox" id="showMineOnly" name="showMineOnly" />
+              <input
+                type="checkbox"
+                id="showMineOnly"
+                name="showMineOnly"
+                checked={showMineOnly}
+                onChange={e => setShowMineOnly(e.target.checked)}
+              />
               <label htmlFor="showMineOnly">Show mine only</label>
             </div>
           )}
@@ -72,12 +122,16 @@ const FilterBar = ({ user }) => {
             <button type="submit" className="btn apply-btn">
               Apply Filters
             </button>
-            <Link to="/" className="btn reset-btn">
+            <button
+              type="button"
+              className="btn reset-btn"
+              onClick={handleReset}
+            >
               Reset
-            </Link>
+            </button>
           </div>
         </div>
-      </Form>
+      </form>
     </div>
   );
 };
