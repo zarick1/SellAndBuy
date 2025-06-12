@@ -13,7 +13,12 @@ const app = express();
 
 //console.log(process.env);
 
-app.use(cors());
+app.use(
+  cors({
+    origin: ['http://localhost:5173', 'https://sellandbuy.onrender.com'],
+    credentials: true,
+  })
+);
 app.use(express.static(path.resolve(__dirname, './public')));
 app.use(cookieParser());
 app.use(express.json());
