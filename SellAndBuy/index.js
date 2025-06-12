@@ -35,9 +35,9 @@ app.use('/api/v1/users', userRouter);
 app.use('/api/v1/ads', adsRouter);
 
 // For deployment
-// app.get('/{*any}', (req, res) => {
-//   res.sendFile(path.resolve(__dirname, './public', 'index.html'));
-// });
+app.get('/{*any}', (req, res) => {
+  res.sendFile(path.resolve(__dirname, './public', 'index.html'));
+});
 
 app.use(globalErrorHandler);
 
