@@ -12,6 +12,7 @@ import { action as loginAction } from './pages/Login';
 import { action as addAdAction } from './pages/AddEditAd';
 import { loader as navbarLoader } from './components/Navbar';
 import { loader as homeLoader } from './pages/Home';
+import { loader as adDetailsLoader } from './pages/AdDetails';
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,7 @@ const router = createBrowserRouter([
       {
         path: 'ads/:id',
         element: <AdDetails />,
+        loader: adDetailsLoader,
       },
       {
         path: 'add-ad',

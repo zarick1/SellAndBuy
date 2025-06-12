@@ -46,7 +46,7 @@ const Navbar = () => {
             <>
               <span className="user-greeting">Hello, {user.username}</span>
               <button onClick={() => navigate('/add-ad')}>Add Ad</button>
-              <button className="btn-danger" onClick={logoutUser}>
+              <button className="btn-danger" onClick={() => logoutUser()}>
                 Log Out
               </button>
             </>

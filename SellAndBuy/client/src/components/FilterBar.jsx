@@ -3,7 +3,7 @@ import { Form, Link } from 'react-router-dom';
 import FormRow from './FormRow';
 import FormRowSelect from './FormRowSelect';
 
-const FilterBar = () => {
+const FilterBar = ({ user }) => {
   return (
     <div className="filter-bar-wrapper">
       <Form className="filter-form">
@@ -60,10 +60,12 @@ const FilterBar = () => {
         </div>
 
         <div className="form-footer">
-          <div className="checkbox-row">
-            <input type="checkbox" id="showMineOnly" name="showMineOnly" />
-            <label htmlFor="showMineOnly">Show mine only</label>
-          </div>
+          {user && (
+            <div className="checkbox-row">
+              <input type="checkbox" id="showMineOnly" name="showMineOnly" />
+              <label htmlFor="showMineOnly">Show mine only</label>
+            </div>
+          )}
 
           <div className="button-group">
             <button type="submit" className="btn apply-btn">

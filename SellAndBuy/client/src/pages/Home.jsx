@@ -31,34 +31,56 @@ export const loader = async ({ request }) => {
 
   const params = createParams(rawParams);
   //console.log(params);
+  let user = null;
+
+  try {
+    const userRes = await axios.get('/api/v1/users/current-user', {
+      withCredentials: true,
+    });
+
+    user = userRes.data.data.user;
+  } catch (err) {
+    console.log('Error from current-user(home)', err);
+
+    user = null;
+  }
 
   try {
     const { data } = await axios.get(endpoint, {
       params,
     });
 
-    return data;
+    return {
+      ...data,
+      user,
+    };
   } catch (error) {
     toast.error(error?.response?.data?.msg || 'Error loading ads');
-    return [];
+    return {
+      status: 'error',
+      results: 0,
+      totalResults: 0,
+      numOfPages: 0,
+      currentPage: 1,
+      data: { ads: [] },
+      user: null,
+    };
   }
 };
 
 const Home = () => {
-  const data = useLoaderData();
-  //const data = { ads: [] };
-  console.log(data);
-  const { totalResults, numOfPages, currentPage } = data;
-  console.log(totalResults, numOfPages, currentPage);
+  const { data, totalResults, numOfPages, currentPage, user } = useLoaderData();
 
-  const ads = data.data.ads;
+  const ads = data.ads;
+  //const data = { ads: [] };
+
   return (
     <Wrapper>
-      <FilterBar />
+      <FilterBar user={user} />
       <h5>
         {totalResults} ad{ads.length > 1 && 's'} found
       </h5>
-      <AdsCard ads={ads} />
+      <AdsCard ads={ads} user={user} />
       {numOfPages > 1 && (
         <Pagination
           totalResults={totalResults}
