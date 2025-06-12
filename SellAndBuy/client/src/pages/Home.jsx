@@ -71,7 +71,7 @@ export const loader = async ({ request }) => {
 const Home = () => {
   const { data, totalResults, numOfPages, currentPage, user } = useLoaderData();
 
-  const ads = data.ads;
+  const ads = data?.ads || [];
   //const data = { ads: [] };
 
   return (
