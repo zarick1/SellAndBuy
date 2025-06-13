@@ -24,7 +24,14 @@ const limiter = rateLimit({
 });
 
 app.use('/api', limiter);
-app.use(helmet());
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      imgSrc: ["'self'", 'data:', 'https:'],
+    },
+  })
+);
 app.use(
   cors({
     origin: ['http://localhost:5173', 'https://sellandbuy.onrender.com'],
