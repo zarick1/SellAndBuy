@@ -53,7 +53,8 @@
 
 3. **Seed the database(optional)**
 
-   ```node seed.js
+   ```bash
+   node seed.js
 
    ```
 
